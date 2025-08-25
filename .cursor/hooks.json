@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "hooks": {
+        "beforeShellExecution": [
+            {
+                "command": "./hooks/audit.sh"
+            },
+            {
+                "command": "./hooks/block-git.sh"
+            }
+        ]
+    }
+}
