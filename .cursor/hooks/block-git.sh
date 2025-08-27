@@ -9,7 +9,7 @@ input=$(cat)
 # Parse the command from the JSON input
 command=$(echo "$input" | jq -r '.command // empty')
 
-# Check if the command contains 'git'
+# Check if the command contains 'git' or 'gh'
 if [[ "$command" =~ git[[:space:]] ]] || [[ "$command" == "git" ]]; then
     # Block the git command and provide guidance to use gh tool instead
     cat << EOF
@@ -20,8 +20,18 @@ if [[ "$command" =~ git[[:space:]] ]] || [[ "$command" == "git" ]]; then
   "agentMessage": "The git command '$command' has been blocked by a project hook. Instead of using raw git commands, please use the 'gh' tool which provides better integration with GitHub and follows best practices. For example:\n- Instead of 'git clone', use 'gh repo clone'\n- Instead of 'git push', use 'gh repo sync' or the appropriate gh command\n- For other git operations, check if there's an equivalent gh command or use the GitHub web interface\n\nThis helps maintain consistency and leverages GitHub's enhanced tooling."
 }
 EOF
+elif [[ "$command" =~ gh[[:space:]] ]] || [[ "$command" == "gh" ]]; then
+    # Ask for permission for gh commands
+    cat << EOF
+{
+  "continue": true,
+  "permission": "ask",
+  "userMessage": "GitHub CLI command requires permission: $command",
+  "agentMessage": "The command '$command' uses the GitHub CLI (gh) which can interact with your GitHub repositories and account. Please review and approve this command if you want to proceed."
+}
+EOF
 else
-    # Allow non-git commands
+    # Allow non-git/non-gh commands
     cat << EOF
 {
   "continue": true,
