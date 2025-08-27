@@ -13,7 +13,7 @@ Cursor Hooks are scripts that can intercept and control shell commands before th
 
 ## Hooks in This Project
 
-### 1. `block-git.sh` - Git Command Control Hook
+### 1. [`block-git.sh`](.cursor/hooks/block-git.sh) - Git Command Control Hook
 
 This hook implements intelligent Git command management by:
 
@@ -27,7 +27,7 @@ This hook implements intelligent Git command management by:
 - `gh repo clone` → Asks for user permission
 - `npm install` → Allowed without intervention
 
-### 2. `audit.sh` - Command Auditing Hook
+### 2. [`audit.sh`](.cursor/hooks/audit.sh) - Command Auditing Hook
 
 This hook provides comprehensive logging and auditing capabilities:
 
