@@ -3,14 +3,20 @@
 # Hook to block git commands and redirect to gh tool usage
 # This hook implements the beforeShellExecution hook from the Cursor Hooks Spec
 
+# Initialize debug logging
+echo "$(date): Hook execution started" >> /tmp/hooks.log
+
 # Read JSON input from stdin
 input=$(cat)
+echo "$(date): Received input: $input" >> /tmp/hooks.log
 
 # Parse the command from the JSON input
 command=$(echo "$input" | jq -r '.command // empty')
+echo "$(date): Parsed command: '$command'" >> /tmp/hooks.log
 
 # Check if the command contains 'git' or 'gh'
 if [[ "$command" =~ git[[:space:]] ]] || [[ "$command" == "git" ]]; then
+    echo "Git command detected - blocking: '$command'" >> /tmp/hooks.log
     # Block the git command and provide guidance to use gh tool instead
     cat << EOF
 {
@@ -21,6 +27,7 @@ if [[ "$command" =~ git[[:space:]] ]] || [[ "$command" == "git" ]]; then
 }
 EOF
 elif [[ "$command" =~ gh[[:space:]] ]] || [[ "$command" == "gh" ]]; then
+    echo "GitHub CLI command detected - asking for permission: '$command'" >> /tmp/hooks.log
     # Ask for permission for gh commands
     cat << EOF
 {
@@ -31,6 +38,7 @@ elif [[ "$command" =~ gh[[:space:]] ]] || [[ "$command" == "gh" ]]; then
 }
 EOF
 else
+    echo "Non-git/non-gh command detected - allowing: '$command'" >> /tmp/hooks.log
     # Allow non-git/non-gh commands
     cat << EOF
 {
