@@ -8,6 +8,11 @@
             {
                 "command": "./hooks/block-git.sh"
             }
+        ],
+        "beforeReadFile": [
+            {
+                "command": "./hooks/redact-secrets.sh"
+            }
         ]
     }
 }

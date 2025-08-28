@@ -4,15 +4,15 @@
 # This hook implements the beforeShellExecution hook from the Cursor Hooks Spec
 
 # Initialize debug logging
-echo "$(date): Hook execution started" >> /tmp/hooks.log
+echo "Hook execution started" >> /tmp/hooks.log
 
 # Read JSON input from stdin
 input=$(cat)
-echo "$(date): Received input: $input" >> /tmp/hooks.log
+echo "Received input: $input" >> /tmp/hooks.log
 
 # Parse the command from the JSON input
 command=$(echo "$input" | jq -r '.command // empty')
-echo "$(date): Parsed command: '$command'" >> /tmp/hooks.log
+echo "Parsed command: '$command'" >> /tmp/hooks.log
 
 # Check if the command contains 'git' or 'gh'
 if [[ "$command" =~ git[[:space:]] ]] || [[ "$command" == "git" ]]; then
