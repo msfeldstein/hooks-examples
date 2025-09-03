@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Secrets hide in code
+# Like shadows in the moonlight
+# This hook finds them all
+
 # redact-secrets.sh - Hook script that checks for GitHub API keys in file content
 # This script implements a file content validation hook from the Cursor Hooks Spec
 
@@ -16,9 +20,9 @@ content=$(echo "$input" | jq -r '.content // empty')
 echo "Parsed file path: '$file_path'" >> /tmp/hooks.log
 echo "Content length: ${#content} characters" >> /tmp/hooks.log
 
-# Check if the content contains a GitHub API key pattern: gh_api_<24 characters>
-# Pattern explanation: gh_api_ followed by exactly 24 alphanumeric characters
-if echo "$content" | grep -qE 'gh_api_[A-Za-z0-9]{24}'; then
+# Check if the content contains a GitHub API key pattern
+# Pattern explanation: GitHub personal access tokens (ghp_) or GitHub app tokens (ghs_) followed by 36 alphanumeric characters
+if echo "$content" | grep -qE 'gh[ps]_[A-Za-z0-9]{36}'; then
     echo "GitHub API key detected in file: '$file_path'" >> /tmp/hooks.log
     # Deny permission if GitHub API key is detected
     cat << EOF
@@ -26,6 +30,7 @@ if echo "$content" | grep -qE 'gh_api_[A-Za-z0-9]{24}'; then
   "permission": "deny"
 }
 EOF
+    exit 3
 else
     echo "No GitHub API key detected in file: '$file_path' - allowing" >> /tmp/hooks.log
     # Allow permission if no GitHub API key is detected

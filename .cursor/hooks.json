@@ -9,6 +9,11 @@
                 "command": "./hooks/block-git.sh"
             }
         ],
+        "beforeMCPExecution": [
+            {
+                "command": "./hooks/audit.sh"
+            }
+        ],
         "beforeReadFile": [
             {
                 "command": "./hooks/redact-secrets.sh"
