@@ -21,8 +21,8 @@ echo "Parsed file path: '$file_path'" >> /tmp/hooks.log
 echo "Content length: ${#content} characters" >> /tmp/hooks.log
 
 # Check if the content contains a GitHub API key pattern
-# Pattern explanation: GitHub personal access tokens (ghp_) or GitHub app tokens (ghs_) followed by 36 alphanumeric characters
-if echo "$content" | grep -qE 'gh[ps]_[A-Za-z0-9]{36}'; then
+# Pattern explanation: GitHub personal access tokens (ghp_), GitHub app tokens (ghs_), or test keys (gh_api_) followed by alphanumeric characters
+if echo "$content" | grep -qE 'gh[ps]_[A-Za-z0-9]{36}|gh_api_[A-Za-z0-9]+'; then
     echo "GitHub API key detected in file: '$file_path'" >> /tmp/hooks.log
     # Deny permission if GitHub API key is detected
     cat << EOF
