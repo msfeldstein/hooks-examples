@@ -18,6 +18,21 @@
             {
                 "command": "./hooks/redact-secrets.sh"
             }
+        ],
+        "afterFileEdit": [
+            {
+                "command": "./hooks/audit.sh"
+            }
+        ],
+        "userPromptSubmit": [
+            {
+                "command": "./hooks/audit.sh"
+            }
+        ],
+        "stop": [
+            {
+                "command": "./hooks/audit.sh"
+            }
         ]
     }
 }
