@@ -2,6 +2,16 @@
 
 This project demonstrates the use of Cursor Hooks to control and monitor shell command execution within the Cursor IDE. The hooks are located in the `.cursor/hooks/` directory and implement various security and auditing features.
 
+## Setting Up Hooks for Your Account
+
+Cursor does not yet support project-level hooks. To install the hooks from this repository into your personal account, run:
+
+```
+npm run setup-hooks
+```
+
+This copies `.cursor/hooks.json` and the `.cursor/hooks` folder into `~/.cursor/` so they load automatically for your user profile. See the [Cursor Hooks documentation](https://cursor.com/docs/agent/hooks) for more details on hook behavior and permissions.
+
 ## What are Cursor Hooks?
 
 Cursor Hooks are scripts that can intercept and control shell commands before they are executed by the AI agent or user within Cursor. They implement the `beforeShellExecution` hook from the Cursor Hooks Specification, allowing you to:

@@ -3,11 +3,14 @@
     "hooks": {
         "beforeShellExecution": [
             {
-                "command": "./hooks/audit.sh"
-            },
-            {
-                "command": "./hooks/block-git.sh"
+                "command": "jq -r '\"\\(.command) - \\(.tool_input.description // \"No description\")\"' >> ~/agent.log"
+
             }
+            ,
+
+        {
+            "command": "./hooks/block-git.sh"
+        }
         ],
         "beforeMCPExecution": [
             {
@@ -24,9 +27,16 @@
                 "command": "./hooks/audit.sh"
             }
         ],
-        "userPromptSubmit": [
+        "beforeSubmitPrompt": [
             {
-                "command": "./hooks/audit.sh"
+                "command": "./hooks/block-secret-name.sh"
+            },
+            {
+               "command": "../test.sh"
+            },
+            {
+                "command": "jq -r '\"\\(.tool_input.command) - \\(.tool_input.description // \"No description\")\"' >> ~/agent.log"
+
             }
         ],
         "stop": [

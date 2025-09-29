@@ -1,0 +1,9 @@
+{
+  "name": "example-cursor-hooks",
+  "version": "1.0.0",
+  "description": "Utilities for installing Cursor hooks into the user profile",
+  "private": true,
+  "scripts": {
+    "setup-hooks": "node scripts/setup-hooks.mjs"
+  }
+}
