@@ -22,7 +22,7 @@ if [[ "$command" =~ git[[:space:]] ]] || [[ "$command" == "git" ]]; then
 {
   "continue": true,
   "permission": "deny",
-  "user_mssage": "Git command blocked. Please use the GitHub CLI (gh) tool instead.",
+  "user_message": "Git command blocked. Please use the GitHub CLI (gh) tool instead.",
   "agent_message": "The git command '$command' has been blocked by a project hook. Instead of using raw git commands, please use the 'gh' tool which provides better integration with GitHub and follows best practices. For example:\n- Instead of 'git clone', use 'gh repo clone'\n- Instead of 'git push', use 'gh repo sync' or the appropriate gh command\n- For other git operations, check if there's an equivalent gh command or use the GitHub web interface\n\nThis helps maintain consistency and leverages GitHub's enhanced tooling."
 }
 EOF
