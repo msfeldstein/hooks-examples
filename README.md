@@ -128,3 +128,7 @@ Hooks like `redact-secrets.sh` that validate file content before saving:
   "agentMessage": "Message shown to the AI agent"
 }
 ```
+
+---
+
+*Last updated: Test change for agent harness verification*
