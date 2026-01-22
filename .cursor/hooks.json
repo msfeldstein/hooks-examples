@@ -1,16 +1,19 @@
 {
     "version": 1,
+    "lastModified": "2024-12-19",
     "hooks": {
+        "afterAgentThought": [
+            {
+                "command": "./hooks/audit.sh"
+            }
+        ],
         "beforeShellExecution": [
             {
                 "command": "jq -r '\"\\(.command) - \\(.tool_input.description // \"No description\")\"' >> ~/agent.log"
-
+            },
+            {
+                "command": "./hooks/block-git.sh"
             }
-            ,
-
-        {
-            "command": "./hooks/block-git.sh"
-        }
         ],
         "beforeMCPExecution": [
             {
@@ -19,7 +22,7 @@
         ],
         "beforeReadFile": [
             {
-                "command": "./hooks/redact-secrets.sh"
+                "command": "./hooks/audit.sh"
             }
         ],
         "afterFileEdit": [
@@ -28,18 +31,27 @@
             }
         ],
         "beforeSubmitPrompt": [
+            // {
+            //     "command": "./.cursor/hooks/no-continue.sh"
+            // },
+            // {
+            //     "command": "./hooks/notify-on-submit.sh"
+            // }
             {
-                "command": "./hooks/block-secret-name.sh"
-            },
-            {
-               "command": "../test.sh"
-            },
-            {
-                "command": "jq -r '\"\\(.tool_input.command) - \\(.tool_input.description // \"No description\")\"' >> ~/agent.log"
-
+                "command": "./hooks/audit.sh"
             }
         ],
-        "stop": [
+        "afterAgentResponse": [
+            {
+                "command": "./hooks/audit.sh"
+            }
+        ],
+        "afterMCPExecution": [
+            {
+                "command": "./hooks/audit.sh"
+            }
+        ],
+        "afterShellExecution": [
             {
                 "command": "./hooks/audit.sh"
             }
